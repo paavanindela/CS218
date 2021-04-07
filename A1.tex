@@ -1,0 +1,402 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{url}
+\usepackage[left=1.1in,right=1.1in,top=1.5in,bottom=1.5in]{geometry}
+\setlength{\parindent}{0pt}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{algorithmic}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\large 190050023,190050030,190050051,190050106.}
+\lhead{\large Design and Analysis of Algorithms}
+\rfoot{\large Page \thepage}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\begin{document}
+ \null
+ \begin{center}%
+  {\LARGE Assignment - 1\par}%
+ \end{center}%
+ \par
+ \begin{center}%
+  {\LARGE 1 February 2021 \par}%
+ \end{center}%
+ \begin{center}%
+  {\large 190050023 \rule[0.5mm]{1cm}{0pt} Aquib Nawaz\par}%
+ \end{center}%
+ \begin{center}%
+  {\large 190050030 \rule[0.5mm]{0.9cm}{0pt} Rajesh Dasari\par}%
+ \end{center}%
+ \begin{center}%
+  {\large 190050051 \rule[0.5mm]{0.8cm}{0pt}Paavan Kumar\par}%
+ \end{center}%
+ \begin{center}%
+  {\large 190050106 \rule[0.5mm]{0.4cm}{0pt} Sanjana Burman\par}%
+ \end{center}%
+ \section*{Question 1}
+ \subsection*{a)}
+ Choose the course x that ends last, discard classes that conflict with x, and recurse.\\
+ This fails.\\
+ \textbf{example:} \\
+  $|$\noindent\rule[0.5mm]{8cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{2cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\noindent\rule[0.5mm]{1cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{0.5cm}{0pt}$|$\noindent\rule[0.5mm]{3cm}{0.4pt}$|$\noindent\rule[0.5mm]{3.75cm}{0pt}$|$\noindent\rule[0.5mm]{0.5cm}{0.4pt}$|$\\
+ Since this algorithm picks the lengthiest job which starts first and ends last but 3 jobs can be scheduled.
+ \subsection*{b)}
+ Choose the course x that starts first, discard all classes that conflict with x, and recurse.\\
+ This fails. \\
+ \textbf{example:} \\
+  $|$\noindent\rule[0.5mm]{8cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{2cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\noindent\rule[0.5mm]{1cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{0.5cm}{0pt}$|$\noindent\rule[0.5mm]{3cm}{0.4pt}$|$\noindent\rule[0.5mm]{3.75cm}{0pt}$|$\noindent\rule[0.5mm]{0.5cm}{0.4pt}$|$\\
+  Since this algorithm picks the lengthiest job which starts first and ends last but 3 jobs can be scheduled.
+ \subsection*{c)}
+  Choose the course x that starts last, discard all classes that conflict with x, and recurse.\\
+  This doesn't fail.\\
+  \textbf{Proof:}\\
+  Let A denote the jobs selected by the algorithm. A = $\{i_1,i_2,i_3,.....i_m\}$.\\
+  Let Opt denote the optimal selection. Opt = $\{j_1,j_2,j_3,....j_k\}$.\\
+  Enough to show that $|$A$|$ = $|$Opt$|$, i.e m = k.\\
+  \textbf{Lemma:} s($i_r$) $\geq$ s($j_r$) where s(.) is start time of the course/job.\\
+  \noindent\rule[0.5mm]{1.25cm}{0pt}For r=1, by the choice of $i_1$, s($i_1$) $\geq$ s($j_1$)\noindent\rule[0.5mm]{2cm}{0pt}  Base case is true\\
+  \noindent\rule[0.5mm]{1.25cm}{0pt}Suppose s($i_{l-1}$) $\geq$ s($j_{l-1}$)\noindent\rule[0.5mm]{4.5cm}{0pt}Induction Hypothesis\\
+  \noindent\rule[0.5mm]{1.25cm}{0pt}When A picks its $l$th job, $j_l$ is available for it to chose from.\\
+  \noindent\rule[0.5mm]{1.25cm}{0pt}Hence s($i_l$) $\geq$ s($j_l$)\noindent\rule[0.5mm]{5.55cm}{0pt}By Induction\\
+  If a job can be picked by Opt, it can also be picked by A at any given time.\\
+  This also shows that A gives the optimal solution.\\
+  Hence $|$A$|\ \geq\ |$Opt$|$, but m cannot be greater than k, so m = k.
+ \subsection*{d)}
+  Choose the course x with shortest duration, discard all classes that conflict with x, and recurse.\\
+  This fails.\\
+  \textbf{Example}\\
+  \noindent\rule[0.5mm]{0.15cm}{0pt}$|$\noindent\rule[0.5mm]{1.60cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.25cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\noindent\rule[0.5mm]{1cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{1.25cm}{0pt}$|$\noindent\rule[0.5mm]{1.1cm}{0.4pt}$|$\noindent\rule[0.5mm]{1cm}{0pt}$|$\noindent\rule[0.5mm]{3.5cm}{0.4pt}$|$\\
+  Starting with the shortest job, we can schedule only 2 classes but the optimal must have 3 classes scheduled.
+ \subsection*{e)}
+ Choose a course x that conflicts with the fewest other courses, discard all classes that conflict with x, and recurse.\\
+ This fails.\\
+ \textbf{Example:}\\
+  \noindent\rule[0.5mm]{0.15cm}{0pt}$|$\noindent\rule[0.5mm]{1.60cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.25cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\noindent\rule[0.5mm]{2cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\\\noindent\rule[0.5mm]{0.15cm}{0pt}$|$\noindent\rule[0.5mm]{1.60cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.25cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\noindent\rule[0.5mm]{2cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{0.15cm}{0pt}$|$\noindent\rule[0.5mm]{1.60cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.25cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\noindent\rule[0.5mm]{2cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{0.15cm}{0pt}$|$\noindent\rule[0.5mm]{1.60cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.25cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.5cm}{0pt}$|$\noindent\rule[0.5mm]{1cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{0.15cm}{0pt}$|$\noindent\rule[0.5mm]{1.60cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.25cm}{0pt}$|$\noindent\rule[0.5mm]{0.85cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.5cm}{0pt}$|$\noindent\rule[0.5mm]{1.3cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.5cm}{0pt}$|$\noindent\rule[0.5mm]{1.8cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.5cm}{0pt}$|$\noindent\rule[0.5mm]{1.5cm}{0.4pt}$|$\\
+  If we run the algorithm we get the 3rd course on the third line which is undesirable as all the otpimal solutions do not contain this course . $|$Opt$|$=5
+ \subsection*{f)}
+ If no classes conflict, choose them all. Otherwise, discard the course with longest duration and recurse.\\
+ This fails.\\
+ \textbf{Example:}\\
+ \noindent\rule[0.5mm]{0.15cm}{0pt}$|$\noindent\rule[0.5mm]{1.60cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.25cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\\
+ \noindent\rule[0.5mm]{1.25cm}{0pt}$|$\noindent\rule[0.5mm]{2.6cm}{0.4pt}$|$\noindent\rule[0.5mm]{1.5cm}{0pt}$|$\noindent\rule[0.5mm]{4.5cm}{0.4pt}$|$\\
+ According to the algorithm only 2 classes would be picked for this example but 3 must be picked according to optimal algorithm.
+ \subsection*{g)}
+ If no classes conflict, choose them all. Otherwise, discard a course that conflicts with the most other courses and recurse.\\
+ This fails.\\
+ \textbf{Example:}\\
+ \noindent\rule[0.5mm]{0.15cm}{0pt}$|$\noindent\rule[0.5mm]{1.60cm}{0.4pt}$|$\noindent\rule[0.5mm]{0.25cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\noindent\rule[0.5mm]{1cm}{0pt}$|$\noindent\rule[0.5mm]{2cm}{0.4pt}$|$\\
+  \noindent\rule[0.5mm]{1.25cm}{0pt}$|$\noindent\rule[0.5mm]{1.1cm}{0.4pt}$|$\noindent\rule[0.5mm]{1cm}{0pt}$|$\noindent\rule[0.5mm]{3.5cm}{0.4pt}$|$\\
+ Since the choice of tie is completely arbitary, if the algorithm by chance picks the second course on the first row then we would get only two classes scheduled which fails to get the number 3 which is by an optimal algorithm, Hence this fails.
+ \subsection*{h)}
+ Let x be the class with the earliest start time, and let y be the class with the second earliest start time.\\
+• If x and y are disjoint, choose x and recurse on everything but x.\\
+• If x completely contains y, discard x and recurse.\\
+• Otherwise, discard y and recurse\\
+This doesn't fail.\\
+\textbf{Proof:}\\
+\textbf{Claim:} If a course x completely contains other course y then there is a optimal schedule which excludes x.\\
+\noindent\rule[0.5mm]{1cm}{0pt} Suppose there is a optimal schedule S such that x $\in$ S\\
+\noindent\rule[0.5mm]{1cm}{0pt} Since y is completely in S, any course that overlaps with y overlaps with x.\\
+\noindent\rule[0.5mm]{1cm}{0pt} Now since no course in S-x must overlap with x \noindent\rule[0.5mm]{1cm}{0pt} [S is optimal]\\
+\noindent\rule[0.5mm]{1cm}{0pt} Therefore no course in S-x will overlap with y \noindent\rule[0.5mm]{1cm}{0pt} [y is contained in x]\\
+\noindent\rule[0.5mm]{1cm}{0pt} Therefore $|$S-x+y$|$ = $|$S$|$.\\
+\noindent\rule[0.5mm]{1cm}{0pt} Therefore S-x+y is optimal solution which doesn't contain x.\\
+\textbf{Claim:} If two courses x and y are disjoint,(x and y satisfy conditions of problem) then optimal solution must contain x.\\
+\noindent\rule[0.5mm]{1cm}{0pt} Suppose there is a Optimal solution S which doesn't include x.\\
+\noindent\rule[0.5mm]{1cm}{0pt} f(x) $<$ f(y) \noindent\rule[0.5mm]{1cm}{0pt} [x and y are disjoint, f(.) is finish time of a job/course]\\
+\noindent\rule[0.5mm]{1cm}{0pt} S+x doesn't have any conflicts \noindent\rule[0.5mm]{1cm}{0pt}[All other jobs have s(.) late than x and y.]\\
+\noindent\rule[0.5mm]{1cm}{0pt} $|$S+x$|$ $>$ $|$S$|$\noindent\rule[0.5mm]{1cm}{0pt} [contradiction]\\
+\noindent\rule[0.5mm]{1cm}{0pt} Hence x must be present in optimal Solution.\\
+\textbf{Claim:} If any of the two above don't happen then there exists a optimal solution with y excluded.\\
+\noindent\rule[0.5mm]{1cm}{0pt} Suppose there is an optimal solution S such that y $\in$ S\\
+\noindent\rule[0.5mm]{1cm}{0pt} f(y) $>$ f(x) \noindent\rule[0.5mm]{1cm}{0pt} [ y is not in x]\\
+\noindent\rule[0.5mm]{1cm}{0pt} Any edge that overlaps with x also overlaps with y [s(U-{x,y}) $>$ s(y)]\\
+\noindent\rule[0.5mm]{1cm}{0pt} Therefore S-y+x has no conflicts.\\
+\noindent\rule[0.5mm]{1cm}{0pt} Therefore $|$S-y+x$|$ = $|$S$|$.\\
+\noindent\rule[0.5mm]{1cm}{0pt} Therefore S-y+x is optimal solution which doesn't contain y.\\
+As a direct consequence of these claims if we follow the steps we get an optimal solution since no claim is violated and the claims are mutually exclusive and spanning. This algorithm can also be viewed as the one discussed in class where we take the course with earliest finish time.
+\subsection*{i)}
+If any course x completely contains another course, discard x and recurse. Otherwise, choose the course y that ends last, discard all classes that conflict with y, and recurse.\\
+ This doesn't fail.\\
+ \textbf{Proof:}\\
+ As a direct consequence of first claim proved above in \textbf{h)}, we can eliminate all the courses which contain other course as we can always find an optimal solution without the larger course.\\
+ Now Since after removal of all such courses, lets say we are left with set X.\\
+ Let y be the course with largest f(.), s(X-{y}) $<$ s(y) \noindent\rule[0.5mm]{1cm}{0pt} [Obvious due to the structure of X]\\
+ Now according the proof in \textbf{c)}, we can say that y is course with the latest start time, and hence we have a optimal solution including y.\\
+ Hence by this method, we can e sure of finding an optimal solution always for X.\\
+ Since an optimal Scheduling for X is also an optimal Scheduling for the given problem. This way doesn't fail.
+ \section*{Question 2}
+ \subsection*{a)}
+ Sort the jobs in non-increasing order of the duration required to correct the first part (i.e. t$_{i,1}$ ) and schedule as per this ordering.\\
+ \noindent\rule[0.5mm]{4cm}{0pt}
+ \textbf{Example:}
+ \begin{tabular}{|c|c|c|c}
+    \hline
+      S.no &  $t_{i,1}$ & $t_{i,2}$\\
+      \hline
+      1 & 6 & 3\\ 
+      2 & 1 & 7\\
+      \hline
+ \end{tabular}\\\vspace*{0.2em}\\
+ According to this strategy, task 1 is scheduled first which means the teachers have to wait for 6 units before correcting subjective , therefore time taken = 6 + \texttt{max}(3,1+7) = 14 units.\\
+ According to the optimal solution, if task 2 was scheduled first then time taken = 1 + \texttt{max}(6+3,7) = 10 units.\\
+ Therefore this strategy fails.
+ \subsection*{b)}
+ Sort the jobs in non-increasing order of the duration required to correct the second part(i.e. t$_{i,2}$ ) and schedule as per this ordering.\\
+ This doesn't fail.\\
+ \textbf{Proof:}\\
+ \textbf{Claim:}\\ Scheduling of task with non-decreasing order of their $t_2$ gives an optimal solution\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Suppose there is a Optimal Schedule S such that y is scheduled just before x with t$_{x,2}$ $>$ t$_{y,2}$.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Let T(S) be the time of completion of the Schedule. an let K be the time at which execution of task y by computer started.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Now consider the Schedule S', where positions of x and y are swapped.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Let T1(S) = the time at which all the taks except x, y are completed.  Also T1(S) = T1(S')\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Then $T(S) = max(T1(S), K+t_{y,1}+t_{y,2}, K + t_{y,1} + t_{x,1} + t_{x,2})$\\
+ \noindent\rule[0.5mm]{1cm}{0pt} And, $T(S') = max(T1(S'), K+t_{x,1}+t_{x,2}, K + t_{y,1} + t_{x,1} + t_{y,2})$\\
+ \noindent\rule[0.5mm]{1cm}{0pt} As $K+t_{x,1}+t_{x,2} < K + t_{y,1} + t_{x,1} + t_{x,2}$ and $K + t_{y,1} + t_{x,1} + t_{y,2} < K + t_{y,1} + t_{x,1} + t_{x,2}$ \\
+ \noindent\rule[0.5mm]{1cm}{0pt}$T(S') \leq T(S)$ But S is optimal so $T(S')=T(S)$ and hence S' is optimal.
+
+ \subsection*{c)}
+ Sort the jobs in non-increasing order of the total time taken to finish correcting both the parts (i.e. t$_{i,1}$+ t$_{i,2}$) and schedule as per this ordering.\\
+ \noindent\rule[0.5mm]{4cm}{0pt}
+ \textbf{Example:}
+ \begin{tabular}{|c|c|c|c}
+    \hline
+      S.no &  $t_{i,1}$ & $t_{i,2}$\\
+      \hline
+      1 & 6 & 1\\ 
+      2 & 1 & 2\\
+      \hline
+ \end{tabular}\\\vspace*{0.2em}\\
+ Using this greedy approach, we are bound to do Task 1 first which means the teachers have to wait for 6 units before correcting subjective, Total time of completion is 6 + \texttt{max}(1,1+2)= 9 units\\
+ But if computer does task 2 first then time of completion is 1 + \texttt{max}(1+6,2) = 8 units [more optimal] \\
+ Therefore this strategy fails.
+ \subsection*{d)}
+ Sort the jobs in non-decreasing order of the duration required to correct the first part (i.e. t$_{i,1}$ ) and schedule as per this ordering.\\
+ \noindent\rule[0.5mm]{4cm}{0pt}
+ \textbf{Example:}
+ \begin{tabular}{|c|c|c|c}
+    \hline
+      S.no &  $t_{i,1}$ & $t_{i,2}$\\
+      \hline
+      1 & 6 & 7\\ 
+      2 & 4 & 8\\
+      \hline
+ \end{tabular}\\\vspace*{0.2em}\\
+ Using this greedy approach, we are bound to do Task 1 first which means the teachers have to wait for 6 units before correcting subjective, Total time of completion is 6 + \texttt{max}(7,4+8) = 18 units\\
+ But if computer does Task 2 first then time of completion is 4 + \texttt{max}(6+7,8) = 17 units [more optimal]\\
+ Therefore this strategy fails.
+ \subsection*{e)}
+ Sort the jobs in non-decreasing order of the duration required to correct the second part(i.e. t$_{i,2}$ ) and schedule as per this ordering.\\
+ \noindent\rule[0.5mm]{4cm}{0pt}
+ \textbf{Example:}
+ \begin{tabular}{|c|c|c|c}
+    \hline
+      S.no &  $t_{i,1}$ & $t_{i,2}$\\
+      \hline
+      1 & 6 & 3\\ 
+      2 & 4 & 8\\
+      \hline
+ \end{tabular}\\\vspace*{0.2em}\\
+ Using this greedy approach, we are bound to do Task 1 first which means the teacher have to wait for 6 units before correcting subjective, Total time of completion is 6+\texttt{max}(3,4+8) = 18 units\\
+ But if computer does Task 2 first then time of completion is 4 + \texttt{6+3,8} = 13 units [mpre optimal]\\
+ Therefore this strategy fails.
+ 
+ \section*{Question 3}
+ 
+ \textbf{Input:}  Directed Acyclic graph $G = (V,E)$ with edge costs in adjacency list representation.\\
+ \textbf{Output:} True or False
+ \begin{algorithmic}
+ \STATE Let $E = \{e_1, e_2, ...    e_n\}$ such that $\forall i < j d(e_i) \leq d(e_j) $
+ \COMMENT {$E$ is the sequence of vertex of given graph with their deadlines in non-decreasing order.}
+ \STATE $T\gets 0$ \COMMENT {gives the current time}
+ \FOR{$v \in V$}
+    \STATE $color(v) \gets WHITE$
+ \ENDFOR
+ \FOR {$i \leq n $}
+    \IF{$color(e_i) = WHITE$}
+        \STATE Let $A = ancestors(e_i)$ \COMMENT{Where ancestor(v) is sequence of all nodes including $e_i$ from which a path to $e_i$ exists satisfying precedence order.}
+        \STATE Compute $A$
+        \FOR {$w \in A$}
+            \IF {$color(w) = WHITE$}
+                \STATE $T \gets T + t(w)$
+                \STATE $color(w) \gets BLACK$
+                \IF {$T > d(w)$}
+                    \STATE \textbf{return} False
+                \ENDIF
+            \ENDIF
+        \ENDFOR
+    \ENDIF
+ \ENDFOR
+ \STATE \textbf{return} True
+ \end{algorithmic}
+ 
+ In the algorithm we are executing task with minimum deadline and its ancestor first in the given precedence order.
+
+ \subsection*{Claim}
+ If there exist a schedule $S$ of task such that all the tasks can be executed before deadline and let $d_i$ be the minimum of all deadlines then there exist another schedule $S'$ in which all the ancestors of $i^{th}$ task and $i^{th}$ task is executed first satisfying precedence order which also satisfy all the deadlines.\\
+ 
+ \vspace{1em}
+ \textbf{Proof}\\
+ Let $S$ be $\{s_1, s_2, s_3,.....,s_j,i,s_{j+1},....,s_{n-1}\}$.\\ 
+ Also $ancestors(i)$ in precedence order is a subsequence of $\{s_1, s_2, s_3,.....,s_j\}$\\
+ Now from above we can say that $C = \sum^j_{k=1}t_{s_k} + t_i \leq d_i$ (as the schedule satisfy deadline)\\
+ 
+ Let sequence $T = \{s_i | s_i \notin ancestors(i) \}$ with the same preceding order.\\
+ Then we can write $S' = ancestors(i){i},T,\{s_{j+1}, .......... ,s_{n-1}\}$. where $XY$ stands for concatenation of two sequence $X and Y$\\
+ 
+ Now for any task $l$ before $s_{j+1}$ in $S'$ time at completion of $l^{th}$ task is $C_l$.\\
+ $C_l \leq C$ as $t_k$s are positive for all k.\\
+ Also $C_l \leq C \leq d_i \leq d_l$ as $d_i$ is minimum.\\
+ Hence $C_l \leq d_l$ and task $l$ is completed before its deadline.\\
+ Since the order of task after and including ${s_{j+1}}$ has not changed and total time elapsed at the starting of $s_{j+1}$ task is same due to same tasks executed(in both S and S' till then) their deadline is also satisfied by $S'$.\\
+ Also since $ancestors(i)$ sequence is satisfying precedence order and the tasks in $T$ are in same order as in $S$ $S'$ preserves precedence order.\\
+ \vspace{1em}
+ 
+ After a ancestors and the tasks are executed another subgraph can be produced by removing those vertex.\\
+ As subgraph of DAG is also an DAG so above claim can be used again.
+ 
+  Using the above claim we can see that if the algorithm returns false then contrapositive of the claim says there doesn't exist any such schedule $S$.\\
+  Also if the algorithm returns True then the order in which tasks are executed in the algorithm is one such schedule.\\
+
+  \textbf{Time Analysis}\\
+  The sequence E can be calculated in $O(|V|log|V|)$ time\\
+  Also sequence A for all vertices can be calculated in $O(|V|+|E|)$ time using dfs  by maintaining a ancestor map for each parent and modifying the map sequentially by adding the current parent to ancestor map of parent\\
+  Also next for loop can have maximum time complexity of $O(|V|^2)$\\
+  From here we can see the time complexity of algorithm is \textbf{O$(|$V$|^2)$} which is polynomial.
+ 
+ \section*{Question 4}
+ \subsection*{a)}
+ \textbf{Input:}  undirected connected graph G = (V,E) with edge costs in adjacency list representation.\\
+ \textbf{Output:} T representing the minimal edge set such that there are no cycles in the graph\\
+ \textbf{Algorithm:}\\
+ Let E' = \{$e_1,e_2,....e_n$\} be the set of edges sorted in decreasing order of c(.).\\
+ Q $\leftarrow \ \phi$, i $\leftarrow$ 1\\
+ \textbf{while} i $\leq$ n \textbf{do}\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt} \textbf{if} Q + $e_i$ doesn't have a cycle \textbf{then}\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Q $\leftarrow$ Q + $e_i$\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt} \textbf{end if}\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt} i $\leftarrow$ i + 1\\
+ \textbf{end while}\\
+ Output G-Q
+ \vspace*{0.5em}\\
+ \textbf{Proof:}\\
+ Let an essential edge,e be defined as an edge which when removed the Graph G becomes disconnected.\\
+ \textbf{Claim:} Any such minimal set T doesn't contain an essential edge.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Suppose the set P contains an essential edge e\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Since removal of e from the graph did not remove any cycle.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} This is because the graph,G is split into two components with total number of cycles same\\
+ \noindent\rule[0.5mm]{1cm}{0pt} N(G) = E - V + n(G) \noindent\rule[0.5mm]{1cm}{0pt} [N(.) is the number of cycles, n(.) is number of connected components]
+ \noindent\rule[0.5mm]{1cm}{0pt} N(G') = E' - V + n(G') = E - 1 - V + n(G) + 1 = N(G)\noindent\rule[0.5mm]{1cm}{0pt} [E' = E - 1, n(G') = n(G) + 1] \\
+ \noindent\rule[0.5mm]{1cm}{0pt} Therfore , P-\{e\} is a set which satisfies all the properties \noindent\rule[0.5mm]{1cm}{0pt} [contradiction]
+ \vspace*{0.2em}\\
+ \textbf{CLaim:} If Q is the maxmium spanning Tree, then Q + T = E\\
+ \noindent\rule[0.5mm]{1cm}{0pt} E-T consists of all the essential edges and is therefore connected.\noindent\rule[0.5mm]{1cm}{0pt} [by claim above]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} E-T is spanning since it is connected.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} E-T doesn't have any cycles. \noindent\rule[0.5mm]{1cm}{0pt}[def. of T' ]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} E-T is a spanning tree. \\
+ \noindent\rule[0.5mm]{1cm}{0pt} By def, T is the minimum set that can be removed to make it acyclic\\
+ \noindent\rule[0.5mm]{1cm}{0pt} So, E-T is a Maximum Spanning Tree.\\
+ We therefore use a modified version of \textbf{kruskal's algorithm} where edges are sorted in descending order, which is a direct consequence of cut property.\\
+ \textbf{Time Complexity}\\
+ Since this is modified Kruskal's algorithm, the time complexity remians same since the change is only in sorting the order ascending/descending.\\
+ This can be done in the same time.\\
+ Therefore this has time complexity \textbf{O(E\texttt{log}V)}
+ 
+ \subsection*{b)}
+ \textbf{Input:} undirected connected graph G = (V,E) with edge costs in adjacency list representation and a specified subset of the vertices R.\\
+ \textbf{Output:} P representing the minimum weight set of edges such that the graph G' = (R,P) is connected.\\
+ \textbf{Algoritm:}\\
+  T $\leftarrow \ \phi$, S $\leftarrow$ R \\
+  \textbf{while} $|$S$|$ $<$ $|$V$|$ \textbf{do}\\
+  \noindent\rule[0.5mm]{1cm}{0pt} Let E$_s$ = \{ (v,w) $\vert$ v $\in$ S and w $\in$ V - S \} \\
+  \noindent\rule[0.5mm]{1cm}{0pt} Compute E$_s$\\
+  \noindent\rule[0.5mm]{1cm}{0pt} Let $\hat{e}$ $\ \leftarrow $ \texttt{argmin}$_{e \in E_s}$ \{c(e)\}\\
+  \noindent\rule[0.5mm]{1cm}{0pt} S $\leftarrow$ S + \{w\} \\
+  \noindent\rule[0.5mm]{1cm}{0pt} T $\leftarrow$ T + $\{\hat{e}\}$ \\
+  \textbf{end while}\\
+  Output T
+  \vspace*{0.25em}\\
+  \textbf{Proof:}\\
+  This is a modified version of \textbf{Prim's Algorithm} where we start with the given vertex set R instead of any arbitrary vertex.\\
+  To argue about its correctness,\\ By the cut property each time we are adding the minimum cost edge to the set T of all other possible edges, Hence this edge must be a part of the minimum spanning tree.\\
+  This is essentially like considering the set R to be a single vertex since we are not interested in adding edges between R.\\
+  So, we are required to find the Minimum spanning Tree considering R to be a single vertex, The modification done to the algorithm does exactly that because no edge is added between vertices of R and we get the min spanning Tree for this new Graph\\
+  There is a path from every edge in V-R to R\\
+  Suppose at some stage the vertex set is S = R+S'\\
+  At this stage if we add an edge e acc. to algorithm, if e was from R to V-R, then we are done.
+  Suppose not, e was from V-R to V-R, then by induction hypothesis v in V-R was already connected to a vertex in R, so there is a path from w to R\\
+  Hence at every stage we are adding a min cost edge such that there is a path from V-R to R\\
+  Hence the algorithm is correct.\\
+  \textbf{Time Complexity:}\\
+  Since this being a modified version of \textbf{Prim's Algorithm}, The time complexity is just the same since only the initial conditions are changed.\\
+  Time complexity will be (V-R)\texttt{log}V + E\texttt{log} V\\
+  There the time complexity of this algorithm is \textbf{O((E+V)\texttt{log}V)}
+  \subsection*{c)}
+ \textbf{Input:} undirected connected graph G = (V,E) with edge costs in adjacency list representation.\\
+ \textbf{Output:} p[1..$|$V$|$], representing the set of edges in second MST in G\\
+ \textbf{Algorithm:}\\
+ Let E' = \{$e_1,e_2,....e_n$\} be the set of edges sorted in increasing order of weight.\\
+ Q $\leftarrow \ \phi$, T $\leftarrow \ \phi$, i $\leftarrow$ 1, c($\phi$) $\leftarrow$ $\infty$\\
+ \textbf{while} i $\leq$ n \textbf{do}\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt} \textbf{if} Q + $e_i$ doesn't have a cycle \textbf{then}\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Q $\leftarrow$ Q + $e_i$\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt} \textbf{end if}\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt} i $\leftarrow$ i + 1\\
+ \textbf{end while}\\
+ i $\leftarrow$ 1, E' = E - Q , m $\leftarrow$ $|$E-Q$|$\\
+ \textbf{for} $e$ $\in$ Q \textbf{do}\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt}\textbf{while} i $\leq$ m \textbf{do}\\
+ \noindent\rule[0.5mm]{1cm}{0pt} \textbf{if} Q + $e_i$ - $e$ doesn't have a cycle \textbf{then}\\
+ \noindent\rule[0.5mm]{1.5cm}{0pt} \textbf{if} c(Q + $e_i$ - $e$) $<$ c(T) \textbf{then}\\
+ \noindent\rule[0.5mm]{2cm}{0pt} T $\leftarrow$ Q + $e_i$ - $e$\\
+ \noindent\rule[0.5mm]{1.5cm}{0pt} \textbf{end if}\\
+ \noindent\rule[0.5mm]{1cm}{0pt} \textbf{end if}\\
+ \noindent\rule[0.5mm]{1cm}{0pt} i $\leftarrow$ i + 1\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt}\textbf{end while}\\
+ \noindent\rule[0.5mm]{0.5cm}{0pt}i $\leftarrow$ 1\\
+ \textbf{end for}\\
+ Output T\\
+ \vspace*{0.5em}\\
+ Let Q and T be the first and second MSTs respectively of the Graph G.\\
+ \textbf{Claim:} Q and T differ in only one edge, i.e a edge in Q is replaced by some other edge to get T.\\
+ \textbf{Proof:} $|$Q$|$ = $|$T$|$ = $|$V$|$ - 1 \noindent\rule[0.5mm]{6cm}{0pt} [Trees]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Suppose Q and T differ in two or more edges.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} This means that Q-T has two or more edges. Let $e_1$ be the edge with minimum weight in Q-T.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Consider the Graph T+$e_1$, This graph has a cycle C.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} This cycle C must have some other edge $e_2$,$e_2 \in$ T-Q.\noindent\rule[0.5mm]{1cm}{0pt} [Otherwise Q would have a cycle]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Suppose w($e_1$) $>$ w($e_2$)\noindent\rule[0.5mm]{5.46cm}{0pt} [Assumption]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Consider the Graph Q+$e_2$, This graph has a cycle C'.\\
+ \noindent\rule[0.5mm]{1cm}{0pt} This cycle C' must have some other edge $e_1'$,$e_1' \in$ Q-T.\noindent\rule[0.5mm]{0.9cm}{0pt} [Otherwise T would have a cycle]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} The Graph, Q'= Q+$e_2$-$e_1$ is a spanning Tree. \noindent\rule[0.5mm]{2.1cm}{0pt} [Since the cycle is broken]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} We have w($e_1'$) $<$ w($e_2$) \noindent\rule[0.5mm]{4cm}{0pt} [Q' is not MST, therefore edge cost will be more]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} From the assumption, we get w($e_1'$) $<$ w($e_2$) $<$ w($e_1$) \noindent\rule[0.5mm]{0.95cm}{0pt} [contradiction]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Therefore w($e_2$) $>$ w($e_1$) \noindent\rule[0.5mm]{5.2cm}{0pt} [weight of edges are distinct]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} Therefore the Tree,T'= Q+$e_2$-$e_1'$ would be spanning \noindent\rule[0.5mm]{1.2cm}{0pt} [The edge cost is lower than T]\\
+ \noindent\rule[0.5mm]{1cm}{0pt} T' differs from Q by only one edge and has w(T') $<$ w(T) \\
+ \noindent\rule[0.5mm]{1cm}{0pt} Therefore T' is second MST.\\
+ We can use \textbf{Kruskal's Algorithm} to find Q.\\
+ And By using E'-Q which is already sorted in terms of weight of edges.\\
+ For each edge e $\in$ Q, we try to find a MST excluding the edge e and including the set of edges Q - {e}.\\
+ Of all the MST's obtained we output which has the smallest cost/weight.\\
+\textbf{Time Analysis}\\
+ Kruskal's Algorithm - O(E$\log$V)\\
+ For each excluded edge finding a MST consumes O(E-V+1)\\
+ For all the edges it takes O((V-1)(E-V+1))\\
+ Total Time - O(E$\log$V+(V-1)(E-V+1)) = \textbf{O(EV)}\\
+ \vspace*{0.5em}\\
+ The Time complexity of this algorithm can be further reduced to \textbf{O(E\texttt{log}V}) by finding the maximal edge on the cycle in \texttt{log}V using Least common ancestor and other least common ancestor like data structures.\\ We found this in \url{https://codeforces.com/blog/entry/9570/}
+ 
+ \end{document}

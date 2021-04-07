@@ -1,0 +1,774 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{url}
+\usepackage[left=1.1in,right=1.1in,top=1.5in,bottom=1.5in]{geometry}
+\setlength{\parindent}{0pt}
+\usepackage{tikz,stackengine}
+\usepackage{lmodern}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{graphs}
+\tikzset{
+  my tree/.style={
+    ->,
+    nodes={draw, circle, minimum size = .5cm},
+    >=Stealth[],
+  },
+}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\large 190050023,190050030,190050051,190050106.}
+\lhead{\large Design and Analysis of Algorithms}
+\rfoot{\large Page \thepage}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\newcommand{\answerbox}[1]{\fbox{\rule{0.8in}{0pt}\textbf{#1}\rule[-0.25ex]{0pt}{3.5ex}}}
+\SetCommentSty{mycommfont}
+\begin{document}
+ \null
+ %\stackon[-5pt]{\resizebox{2in}{!}{Minimum Working Example}}
+%{\begin{tikzpicture}\draw[color=cyan](0,0) circle (2);\end{tikzpicture}}
+ \rule[0mm]{16cm}{0.4pt}
+ \begin{center}%
+  {\LARGE Assignment - 2\par}%
+ \end{center}%
+ \par
+ \begin{center}
+ {\rule[0mm]{8cm}{0.4pt}}
+ \end{center}
+ \begin{center}%
+  {\LARGE 10 March 2021 \par}%
+ \end{center}
+ \begin{center}
+ {\rule[0mm]{8cm}{0.4pt}}
+ \end{center}
+ \begin{center}
+  \large 190050023 \rule[0.5mm]{1cm}{0pt} Aquib Nawaz\par
+ \end{center}
+ \begin{center}
+  \large 190050030 \rule[0.5mm]{0.9cm}{0pt} Rajesh Dasari\par
+ \end{center}
+ \begin{center}
+  \large 190050051 \rule[0.5mm]{0.8cm}{0pt}Paavan Kumar\par
+ \end{center}
+ \begin{center}
+  \large 190050106 \rule[0.5mm]{0.4cm}{0pt} Sanjana Burman\par
+  \rule[0mm]{8cm}{0.4pt}
+ \end{center}
+ \rule[12mm]{16cm}{0.4pt}
+ \section*{Question 1}
+ \begin{center}
+     \answerbox{p} \rule[0.5mm]{0.2cm}{0pt} \answerbox{q} \rule[0.5mm]{0.2cm}{0pt} \answerbox{r} \\
+     \answerbox{p} \rule[0.5mm]{0.2cm}{0pt} \answerbox{q} \rule[0.5mm]{0.2cm}{0pt} \answerbox{r}
+ \end{center}
+ Note that a = 10$^{\frac{2\mathtt{n}}{3}}$ p + 10$^{\frac{\mathtt{n}}{3}}$ q + r\par
+ \subsection*{Algorithm}
+ This is a recursive algorithm whose description is given below
+ \vspace*{1em}\\
+ \textbf{Square(a)}:
+ \begin{itemize}
+     \item Let p,q,r be the first, second and third triplets of a
+     \item Let \texttt{s}$_1$ $\leftarrow$ \texttt{Square(p)}, \texttt{s}$_2$ $\leftarrow$ \texttt{Square(q)} and \texttt{s}$_3$ $\leftarrow$ \texttt{Square(r)}
+     \item Let \texttt{S}$_1$ $\leftarrow$ \texttt{Square(p+q)}, \texttt{S}$_2$ $\leftarrow$ \texttt{Square(q+r)}  and \texttt{S}$_3$ $\leftarrow$ \texttt{Square(p+r)}
+     \item Output 10$^{\frac{4\mathtt{n}}{3}}$ s$_1$ + 10$^{\mathtt{n}}$ (S$_1$ - s$_1$ -s$_2$) + 10$^{\frac{2\mathtt{n}}{3}}$ (s$_2$ + S$_3$ - s$_1$ - s$_2$) + 10$^{\frac{\mathtt{n}}{3}}$ (S$_2$ - s$_2$ - s$_3$) + s$_3$   
+ \end{itemize}\newpage
+ \subsection*{Correctness}
+ Since a = 10$^{\frac{2\mathtt{n}}{3}}$ p + 10$^{\frac{\mathtt{n}}{3}}$ q + r\\
+ \begin{equation*}
+     a^2 = (10^{\frac{2\mathtt{n}}{3}} p + 10^{\frac{\mathtt{n}}{3}} q + r) \times (10^{\frac{2\mathtt{n}}{3}} p + 10^{\frac{\mathtt{n}}{3}} q + r)
+ \end{equation*}
+ On expanding we get,\\
+ \begin{equation*}
+     a^2 = 10^{\frac{4\mathtt{n}}{3}} p^2 + 10^{n} pq + 10^{\frac{2\mathtt{n}}{3}} pr + 10^{n} qp + 10^{\frac{2\mathtt{n}}{3}} q^2 + 10^{\frac{\mathtt{n}}{3}} qr +
+     10^{\frac{2\mathtt{n}}{3}} pr + 10^{\frac{\mathtt{n}}{3}} qr + r^2
+ \end{equation*}
+ \begin{equation*}
+     a^2 = 10^{\frac{4\mathtt{n}}{3}} p^2 + 10^{n} 2pq + 10^{\frac{2\mathtt{n}}{3}} (2pr + q^2) + 10^{\frac{\mathtt{n}}{3}} 2qr + r^2
+ \end{equation*}
+ Using the identity (x + y)$^2$  = x$^2$ + y$^2$ + 2xy,\\
+ \begin{equation*}
+     a^2 = 10^{\frac{4\mathtt{n}}{3}} p^2 + 10^{n}( (p+q)^2 - p^2 - q^2) + 10^{\frac{2\mathtt{n}}{3}} ((p+r)^2 - p^2 - r^2 + q^2) + 10^{\frac{\mathtt{n}}{3}} ((q+r)^2 - q^2 - r^2) + r^2
+ \end{equation*}
+ From Above acc to definitions in the algorithm, we can see
+ \begin{equation*}
+     a^2 = 10^{\frac{4\mathtt{n}}{3}} s_1 + 10^{\mathtt{n}} (S_1 - s_1 -s_2) + 10^{\frac{2\mathtt{n}}{3}} (s_2 + S_3 - s_1 - s_2) + 10^{\frac{\mathtt{n}}{3}} (S_2 - s_2 - s_3) + s_3
+ \end{equation*}
+ Hence the Algorithm is correct since it computes the squares exactly the same way as given by the equations above\\
+ \subsection*{Time Analysis}
+ The combining step can done in O(n) steps since it is purely addition and translation of numbers of size at most 2n. The number of recursive calls made by the recursive function is 6 and all of these calls are on size $\frac{n}{3}$\\
+ \begin{equation*}
+     T(n) = 6T(\frac{n}{3}) + O(n)
+ \end{equation*}
+ \begin{center} 
+ \tikz[my tree] {
+  \node {n}
+  child {
+    node {$\frac{n}{3}$}
+    child {
+      node {$\frac{n}{9}$}
+    }
+    child {
+      node {$\frac{n}{9}$}
+    }
+    child {
+      node {$\frac{n}{9}$}
+    }
+    child {
+      node {$\frac{n}{9}$}
+    }
+    child {
+      node {$\frac{n}{9}$}
+    }
+    child {
+      node {$\frac{n}{9}$}
+    }
+  }
+  child {
+    node {$\frac{n}{3}$}
+  }
+  child {
+    node {$\frac{n}{3}$}
+  }
+  child {
+    node {$\frac{n}{3}$}
+  }
+  child {
+    node {$\frac{n}{3}$}
+  }
+  child {
+    node {$\frac{n}{3}$}
+  };
+}
+\end{center}
+Number of Levels in the tree is 
+\begin{equation*}
+    N = \log_3 n
+\end{equation*}
+Sum at each level is 
+\begin{equation*}
+    S_r = \frac{n}{3^r} \times 6^r = 2^rn
+\end{equation*}
+Sum at all levels
+\begin{equation*}
+    S = \sum_0^N S_r = \sum_0^N 2^rn = n(2^{N+1} - 1)
+\end{equation*}
+\begin{equation*}
+    S = O(n({(3^{\log_3 2})}^{N})) = O(n\times n^{\log_3 2}) = O(n^{\log_3 6})
+\end{equation*}
+\begin{equation*}
+    T(n) = O(n^{\log_3 6})
+\end{equation*}
+ \section*{Question 2}
+ \subsection*{a)}
+ \subsubsection*{Algorithm}
+ \begin{algorithm}[H]
+\SetAlgoLined
+\DontPrintSemicolon
+    \SetKwFunction{Fsub}{WhomTargetsWhomHelper}
+    \SetKwProg{Fn}{Function}{:}{}
+    \SetKwFunction{FMain}{WhomTargetsWhom}
+    \SetKwProg{Fn}{Function}{:}{}
+    \Fn{\Fsub{Ht,L,R,a,c}}{
+         b $\gets$ $\frac{a+c}{2}$\\
+        \Fsub{Ht, L, R, a, b}\\
+        \Fsub{Ht, L, R, b+1, c}\\
+        x $\gets$ b, y $\gets$ b+1\\
+        \ForEach{i $\in$ b+1 upto c}{
+        \If{L[i] = -1}{
+            \ForEach{j $\in$ x downto 1}{
+                \If{Ht[i] $<$ Ht[j]}
+                { L[i] = j\\ x $\gets$ j\\ \textbf{break} }
+            }
+        }
+        }
+        \ForEach{i $\in$ b downto c}{
+        \If{R[i] = -1}{
+            \ForEach{j $\in$ y upto 1}{
+                \If{Ht[i] $<$ Ht[j]}
+                { R[i] = j\\ y $\gets$ j\\ \textbf{break} }
+            }
+        }
+        }
+        \textbf{return}\vspace*{0.45em}
+    }
+    \textbf{end}\\
+    \Fn{\FMain{H[1..n]}}{
+        L and R are initially n length arrays with all -1\\
+        \Fsub{Ht,L,R,1,n}\\
+        \textbf{return} L[1..n],R[1..n]\vspace*{0.45em}
+    }
+\textbf{end}
+\caption{Computing the Left and Right Targets}
+\end{algorithm}
+ \subsubsection*{Correctness}
+ The algorithm divides the Ht array into two halves and recursively computes the values of L and R.\\
+ The Left half of the Left Targets array doesn't change and we need to update the right half of the Left Targets.\\
+ Similarly The Right half of the right targets doesn't change and we need to update the left half of the right targets as there are no elements to the right of the right half.\\
+ \textbf{Lemma:} If in the right half for some p,q L[p] = L[q] = -1 and p $<$ q then we have Ht[q] $>$ Ht[p].\\
+ \textbf{Proof:} This is easy to see\\
+ \rule[0.5mm]{1cm}{0pt} L[p] = -1 $\implies$ There is no element to the left greater than Ht[p]\\
+ \rule[0.5mm]{1cm}{0pt} L[q] = -1 $\implies$ There is no element to the left greater than Ht[q]\\
+ \rule[0.5mm]{1cm}{0pt} Since p $<$ q, Ht[q] $>$ Ht[p].\\
+ If rightL[x] $\neq$ -1 then L[x] = rightL[x]\\
+ If For x $<$ y rightL[x] = -1 and rightL[y] = -1  then L[x] $\leq$ L[y] as a direct consequence of the lemma.\\
+ So the algorithm does checking from the previous value of x found out as i grows from b+1 to c and j goes down from x to 1 and x is memorised.\\
+ \textbf{Lemma:} If in the right half for some p,q R[p] = R[q] = -1 and p $<$ q then we have Ht[q] $<$ Ht[p].\\
+ \textbf{Proof:} This is easy to see\\
+ \rule[0.5mm]{1cm}{0pt} R[p] = -1 $\implies$ There is no element to the right greater than Ht[p]\\
+ \rule[0.5mm]{1cm}{0pt} R[q] = -1 $\implies$ There is no element to the right greater than Ht[q]\\
+ \rule[0.5mm]{1cm}{0pt} Since p $<$ q, Ht[p] $>$ Ht[q].\\
+ If LeftR[x] $\neq$ -1 then R[x] = LeftR[x]\\
+ If For x $<$ y leftR[x] = -1 and leftR[y] = -1  then R[x] $\geq$ R[y] as a direct consequence of the lemma.\\
+ So the algorithm does checking from the previous value of y found out as i goes down from b to a and j grows from y to c and y is memorised.\\
+ \subsubsection*{Time Analysis}
+ Although there are two for loops for updating the values of LeftR and rightL, the combination step is done in n steps as the situation where we check for j twice doesn't arise because we memorize the value of x and start from the previous j Hence there are at most n steps for updating the values of L and R.\\
+ The combination step is done in n steps and divided into two halves of length $\frac{n}{2}$ each so
+ \begin{equation*}
+     T(n) = 2T(\frac{n}{2}) + O(n)
+ \end{equation*}
+ \begin{center} 
+ \tikz[my tree] {
+  \node {n}
+  child {
+    node {$\frac{n}{2}$}
+    child { node {$\frac{n}{4}$}}
+    child { node {$\frac{n}{4}$} child { node {$\frac{n}{8}$} } child { node{$\frac{n}{8}$}} }  }
+    child { node {$\frac{n}{2}$} }
+}
+\end{center}
+We can clearly see that this recurrence relation solution is \textbf{O(n$\mathbf{\log}$n)}
+ \subsection*{b)}
+ At least $\lfloor\frac{n}{2}\rfloor$ of the n heroes are targets. That is, prove that the output arrays R[0 .. n-1] and L[0 .. n-1] contain at least $\lfloor\frac{n}{2}\rfloor$ distinct values (other than None).
+ 
+ \textbf{Proof:}\\
+ \textbf{Claim:} For any Two consecutive Heroes h$_i$,h$_{i+1}$ one of them is a target of other\\
+ \rule[0.5mm]{1.25cm}{0pt} h$_i$ $\neq$ h$_{i+1}$ heights of all heroes are distinct\\
+ \rule[0.5mm]{1.25cm}{0pt} if h$_i$ $<$ h$_{i+1}$ ,then R[i] = i+1\\
+ \rule[0.5mm]{1.25cm}{0pt} if h$_i$ $>$ h$_{i+1}$ ,then L[i+1] = i\\
+ \rule[0.5mm]{1.25cm}{0pt} Hence one of them is a target of other.\\
+ \textbf{Case 1}: n is even\\
+ \rule[0.5mm]{1.25cm}{0pt} If the sequence was h$_1$,h$_2$,h$_3$,....h$_{n-1}$,h$_n$\\
+ \rule[0.5mm]{1.25cm}{0pt} Let the pairs be (h$_1$,h$_2$),(h$_3$,h$_4$),...(h$_{n-1}$,h$_n$)\\
+ \rule[0.5mm]{1.25cm}{0pt} At least one from each pair is a target by the above claim\\
+ \rule[0.5mm]{1.25cm}{0pt} Since all are distinct pairs, there are at least $\frac{n}{2}$ distinct pairs\\
+ \textbf{Case 2}: n is odd\\
+ \rule[0.5mm]{1.25cm}{0pt} If the sequence was h$_1$,h$_2$,h$_3$,....h$_{n-2}$,h$_{n-1}$,h$_n$\\
+ \rule[0.5mm]{1.25cm}{0pt} Let the pairs be (h$_1$,h$_2$),(h$_3$,h$_4$),...(h$_{n-2}$,h$_{n-1}$)\\
+ \rule[0.5mm]{1.25cm}{0pt} At least one from each pair is a target by the above claim\\
+ \rule[0.5mm]{1.25cm}{0pt} Since all are distinct pairs, there are at least $\frac{n-1}{2}$ distinct pairs\\
+ Hence  At least $\lfloor\frac{n}{2}\rfloor$ of the n heroes are targets
+ \subsection*{c)}
+ \subsubsection{Algorithm}
+ \begin{algorithm}[H]
+\SetAlgoLined
+\DontPrintSemicolon
+    \SetKwFunction{Fsub}{IsNotKilled}
+    \SetKwProg{Fn}{Function}{:}{}
+    \SetKwFunction{FMain}{Rounds}
+    \SetKwProg{Fn}{Function}{:}{}
+    \Fn{\Fsub{X[1..n],K}}{
+        X[0] $\gets$ $\infty$, X[n+1] $\gets$ $\infty$\\
+        \eIf{ X[k-1] $>$ X[k] and X[k+1] $>$ X[k]}{\textbf{return} True}{\textbf{return} False}
+    }
+    \textbf{end}\\
+    \Fn{\FMain{H[1..n]}}{
+        \eIf{n = 1}{\textbf{return} 0}{
+        T is initially an array with all zero values.\\
+        n' $\gets$ 1\\
+        \ForEach{k $\in$ \{1,2,...,n\}}{
+            \If{\Fsub{H[1..n],k}}{
+            T[n'] $\gets$ k\\
+            n' $\gets$ n'+1
+            }
+        }
+        \textbf{return} 1+\FMain{T[1..n']}
+        }
+    }
+\textbf{end}
+\caption{Computing the Number of Rounds}
+\end{algorithm}
+ \subsubsection{Correctness}
+ \textbf{Claim:} A hero is alive at the next step if and only if h$_{k-1}$ $>$ h$_k$ and h$_{k+1}$ $>$ h$_k$ (if they exist)\\ 
+ \textbf{Proof:} If h$_{k-1}$ $<$ h$_k$ ,then k-1 would kill him since R[k-1] = k\\
+ \rule[0.5mm]{1cm}{0pt} If h$_{k+1}$ $<$ h$_k$ ,then k+1 would kill him since L[k+1] = k\\
+ \rule[0.5mm]{1cm}{0pt} If h$_{k-1}$ $>$ h$_k$, then k will not be present in Right targets of any hero.\\
+ \rule[0.5mm]{1cm}{0pt} Suppose not,i.e, for some i $<$ k-1, R[i] = k $\implies$ h$_i$ $<$ h$_k$\\
+ \rule[0.5mm]{1cm}{0pt} h$_i$ $<$ h$_k$ and h$_{k-1}$ $>$ h$_k$ $\implies$ h$_i$ $<$ h$_{k-1}$ hence R[i] = k-1, So our assumption above is wrong\\
+ \rule[0.5mm]{1cm}{0pt} If h$_{k+1}$ $>$ h$_k$, then k will not be present in left targets of any hero.\\
+ \rule[0.5mm]{1cm}{0pt} Suppose not,i.e, for some i $>$ k+1, L[i] = k $\implies$ h$_i$ $<$ h$_k$\\
+ \rule[0.5mm]{1cm}{0pt} h$_i$ $<$ h$_k$ and h$_{k+1}$ $>$ h$_k$ $\implies$ h$_i$ $<$ h$_{k+1}$ hence L[i] = k+1, So our assumption above is wrong\\
+ \rule[0.5mm]{1cm}{0pt} Hence our claim is True since k is not present in either Left targets or right targets.\\
+ Hence at every step The algorithm computes the remaining list of persons after shooting each other as ordered by the Doctor as the function IsNotKilled computes correctly whether an hero is left alive or not. At every step T[1..n'] gives the remaining heroes which is recursively computed.
+ \subsubsection{Time analysis}
+ The Function IsNotKilled is an \textbf{O(1)} Algorithm.\\
+ The relation between n' and n is given as follows.\\
+ \begin{equation*}
+     n' \leq \lceil\frac{n}{2}\rceil
+ \end{equation*}
+ This is due to the fact that in \textbf{b)} at least $\lfloor\frac{n}{2}\rfloor$ of the n heroes are targets. So At most $\lceil\frac{n}{2}\rceil$ of the n heroes will remain alive.
+ \begin{equation*}
+     \lfloor\frac{n}{2}\rfloor + \lceil\frac{n}{2}\rceil = n
+ \end{equation*}
+ Therefore this yields the recurrence relation since the combination/recursion step is done in n steps with the help of a for loop.
+ \begin{equation*}
+     T(n) \leq T(\lceil\frac{n}{2}\rceil) + n \ with \ T(1) = 1
+ \end{equation*}
+  \begin{center} 
+ \tikz[my tree] {
+  \node {n}
+  child {
+    node {$\lceil\frac{n}{2}\rceil$}
+    child {
+      node {$\lceil\frac{\lceil\frac{n}{2}\rceil}{2}\rceil$}
+    }
+    }
+}
+\end{center}
+Hence the recurrence relation is an \textbf{O(n)} algorithm as ceil can be approximated as the number istelf for large n.\\
+We get a sum 
+\begin{equation*}
+    T(n) \leq n + \frac{n}{2} + \frac{n}{4} + ..
+\end{equation*}
+Hence the answer to this problem is T(n) = 2n , i.e T(n) = \textbf{O(n)}
+ \section*{Question 3}
+  We can see that for a given i the 3*1 rectangle can look like one out of 8 given rectangle where coloured block means the that block is tiled by some 2*1 rectangle.\\
+ \begin{center}
+ \begin{tikzpicture}
+ \draw (0, 0) rectangle (1, 1);
+ \draw (0, 1) rectangle (1, 2);
+ \draw (0, 2) rectangle (1, 3);
+ 
+ \draw (1.5, 0) rectangle (2.5, 1);
+ \draw (1.5, 1) rectangle (2.5, 2);
+ \fill[blue!60!white, draw=black] (1.5, 2) rectangle (2.5, 3);
+ 
+ \draw (3, 0) rectangle (4, 1);
+ \fill[blue!60!white, draw=black]  (3, 1) rectangle (4, 2);
+ \draw (3, 2) rectangle (4, 3);
+ 
+ \draw (4.5, 0) rectangle (5.5, 1);
+ \fill[blue!60!white, draw=black] (4.5, 1) rectangle (5.5, 2);
+ \fill[blue!60!white, draw=black] (4.5, 2) rectangle (5.5, 3);
+ 
+ \fill[blue!60!white, draw=black] (6, 0) rectangle (7, 1);
+ \draw (6, 1) rectangle (7, 2);
+ \draw (6, 2) rectangle (7, 3);
+ 
+ \fill[blue!60!white, draw=black] (7.5, 0) rectangle (8.5, 1);
+ \draw (7.5, 1) rectangle (8.5, 2);
+ \fill[blue!60!white, draw=black] (7.5, 2) rectangle (8.5, 3);
+ 
+ \fill[blue!60!white, draw=black] (9, 0) rectangle (10, 1);
+ \fill[blue!60!white, draw=black] (9, 1) rectangle (10, 2);
+ \draw (9, 2) rectangle (10, 3);
+ 
+ \fill[blue!60!white, draw=black] (10.5, 0) rectangle (11.5, 1);
+ \fill[blue!60!white, draw=black] (10.5, 1) rectangle (11.5, 2);
+ \fill[blue!60!white, draw=black] (10.5, 2) rectangle (11.5, 3);
+ 
+ 
+ \end{tikzpicture}\\
+ 0 \hspace{1.1cm} 1 \hspace{1.1cm} 2 \hspace{1.1cm} 3 \hspace{1.1cm} 4 \hspace{1.1cm} 5 \hspace{1.1cm} 6 \hspace{1.1cm} 7
+ \end{center}
+ Now all possible ways of getting these 8 rectangle at $i^{th}$ position can be found using these rectangles at $(i-1)^{th}$ position by adding 2*1 rectangle.  \\
+ \begin{center}
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3); 
+ \end{tikzpicture}\\
+  So [i][0] = [i-1][7]
+ \end{center}
+ \begin{center}
+  \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \fill[blue!60!white, draw=black](1,2) rectangle (2,3);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,2);
+ \fill[yellow!60!white, draw=black](0,2) rectangle (2,3);
+ \end{tikzpicture}\\
+ So [i][1] = [i-1][6]
+ \end{center}
+ \begin{center}
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \fill[blue!60!white, draw=black](1,1) rectangle (2,2);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,1);
+ \fill[blue!60!white, draw=black](0,2) rectangle (1,3);
+ \fill[yellow!60!white, draw=black](0,1) rectangle (2,2);
+ \end{tikzpicture}\\
+ So [i][2] = [i-1][5]
+ \end{center}
+ \begin{center}
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \fill[blue!60!white, draw=black](1,1) rectangle (2,3);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,1);
+ \fill[yellow!60!white, draw=black](0,1) rectangle (2,3);
+\draw (0,2) -- (2,2);
+ \end{tikzpicture}+
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \fill[yellow!60!white, draw=black](1,1) rectangle (2,3);
+ \end{tikzpicture}\\
+ So [i][3] = [i-1][4] + [i-1][7]
+ \end{center}
+ \begin{center}
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \fill[blue!60!white, draw=black](1,0) rectangle (2,1);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,1) rectangle (1,3);
+ \fill[yellow!60!white, draw=black](0,0) rectangle (2,1);
+ \end{tikzpicture}\\
+ So [i][4] = [i-1][3]
+ \end{center}
+ \begin{center}
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \fill[blue!60!white, draw=black](1,2) rectangle (2,3);
+ \fill[blue!60!white, draw=black](1,0) rectangle (2,1);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,1) rectangle (1,2);
+ \fill[yellow!60!white, draw=black](0,0) rectangle (2,1);
+ \fill[yellow!60!white, draw=black](0,2) rectangle (2,3);
+ \end{tikzpicture}\\
+ So [i][5]=[i-1][2]
+ \end{center}
+ \begin{center}
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \fill[blue!60!white, draw=black](1,0) rectangle (2,2);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,2) rectangle (1,3);
+ \fill[yellow!60!white, draw=black](0,0) rectangle (2,2);
+ \draw (0,1) -- (2, 1);
+ \end{tikzpicture}+
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,3);
+ \fill[yellow!60!white, draw=black](1,0) rectangle (2,2);
+ \end{tikzpicture}\\
+ So [i][6]=[i-1][1]+[i-1][7]    
+ \end{center}
+ \begin{center}
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (2,3);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[yellow!60!white, draw=black](0,0) rectangle (2,3);
+ \draw (0,1) -- (2,1);
+ \draw (0,2) -- (2,2);
+ \end{tikzpicture}+
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,1) rectangle (1,3);
+ \fill[yellow!60!white, draw=black](0,0) rectangle (2,1);
+ \fill[yellow!60!white, draw=black](1,1) rectangle (2,3);
+ \end{tikzpicture} +
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,3);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,2);
+ \fill[yellow!60!white, draw=black](0,2) rectangle (2,3);
+ \fill[yellow!60!white, draw=black](1,0) rectangle (2,2);
+ \end{tikzpicture}\\
+ So [i][7] = [i-1][0]+[i-1][3]+[i-1][6]
+ \end{center}
+ So using above result we can form an algorithm.
+ \begin{algorithm}[H]
+    \KwResult{Number of ways of tiling 3*2n rectangle by 2*1 rectangles}
+    $prev \longleftarrow list(0,8)$ \tcp*{list of size 8 with value of each element 0}
+    $curr \longleftarrow list(0,8)$\\
+    prev[7]=1 \tcp*{number of ways of forming[0][7] = [1][0]}
+    \For{$i = 1; i \leq 2n; i++$}{
+    $curr[0] \longleftarrow prev[7];$\\
+	$curr[1] \longleftarrow prev[6];$\\
+	$curr[3] \longleftarrow prev[7] + prev[4];$\\
+	$curr[4] \longleftarrow prev[3];$\\
+	$curr[6] \longleftarrow prev[7] + prev[1];$\\
+	$curr[7] += prev[0] + prev[3] + prev[6];$\\
+	$prev \longleftarrow curr;$ \tcp*{At end of iteration prev will be current}
+	$curr \longleftarrow list(0,8);$\\
+    }
+    \KwRet{$prev[7]$} 
+    \caption{Number of ways of Forming a 3 by 2n rectangle}
+ \end{algorithm}
+ 
+ We can do above steps for 4*1 rectangle also which gives us following results.\\
+ \begin{equation*}
+     [i][0]= [i-1][15]
+ \end{equation*}
+ \begin{equation*}
+     [i][3]=[i-1][12]+[i-1][15]
+ \end{equation*}
+ \begin{equation*}
+     [i][6]=[i-1][9]+[i-1][15]
+ \end{equation*}
+ \begin{equation*}
+     [i][9]=[i-1][6]
+ \end{equation*}
+ \begin{equation*}
+     [i][12]=[i-1][3]+[i-1][15]
+ \end{equation*}
+ \begin{equation*}
+     [i][15]=[i-1][0]+[i-1][3]+[i-1][6]+[i-1][12]+[i-1][15]
+ \end{equation*}
+ \begin{center}
+     \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,4);
+ \fill[blue!60!white, draw=black](0,0) rectangle (2,4);
+ \end{tikzpicture} =
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,4);
+ \fill[yellow!60!white, draw=black](0,0) rectangle (2,4);
+ \draw (0,1) -- (2,1);
+ \draw (0,2) -- (2,2);
+ \draw (0,3) -- (2,3);
+ \end{tikzpicture}+
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,4);
+ \fill[blue!60!white, draw=black](0,2) rectangle (1,4);
+ \fill[yellow!60!white, draw=black](0,0) rectangle (2,1);
+ \fill[yellow!60!white, draw=black](1,2) rectangle (2,4);
+ \fill[yellow!60!white, draw=black](0,1) rectangle (2,2);
+ \end{tikzpicture} +
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,4);
+ \fill[blue!60!white, draw=black](0,1) rectangle (1,3);
+ \fill[yellow!60!white, draw=black](0,0) rectangle (2,1);
+ \fill[yellow!60!white, draw=black](1,1) rectangle (2,3);
+ \fill[yellow!60!white, draw=black](0,3) rectangle (2,4);
+ \end{tikzpicture}
+ +
+\begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,4);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,2);
+ \fill[yellow!60!white, draw=black](0,2) rectangle (2,3);
+ \fill[yellow!60!white, draw=black](1,0) rectangle (2,2);
+ \fill[yellow!60!white, draw=black](0,3) rectangle (2,4);
+ \end{tikzpicture}
+ +
+ \begin{tikzpicture}
+ \draw[step=1cm](0,0) grid (2,4);
+ \fill[blue!60!white, draw=black](0,0) rectangle (1,4);
+ \fill[yellow!60!white, draw=black](1,0) rectangle (2,2);
+ \fill[yellow!60!white, draw=black](1,2) rectangle (2,4);
+ \end{tikzpicture}
+ \end{center}
+ We have dropped some $[i][j]s$ because they are not used in computing $[i][15]$\\
+ \newpage
+ So using above results we can form an algorithm.\\
+ 
+ \begin{algorithm}[H]
+    \KwResult{Number of ways of tiling 4*n rectangle by 2*1 rectangles}
+    $prev \longleftarrow list(0,15)$ \tcp*{list of size 15 with value of each element 0}
+    $curr \longleftarrow list(0,15)$\\
+    $prev[15]=1;$ \tcp*{number of ways of forming$[0][15] = [1][0]$}
+    \For{$i = 1; i \leq n; i++$}{
+    $curr[0] \longleftarrow prev[15];$\\
+	$curr[3] \longleftarrow prev[15]+ prev[12];$\\
+	$curr[6] \longleftarrow prev[15] + prev[9];$\\
+	$curr[9] \longleftarrow prev[6];$\\
+	$curr[12] += prev[3] + prev[15];$\\
+	$curr[15] += prev[0] + prev[3] + prev[6] + prev[12] + prev[15];$\\
+	$prev \longleftarrow curr;$ \tcp*{At end of iteration prev will be current}
+	$curr \longleftarrow list(0,15);$\\
+    }
+    \KwRet{$prev[15]$} 
+     \caption{Number of ways of Forming a 4 by n rectangle}
+ \end{algorithm}
+
+ Since above algorithms are using only a for loop with all operations in it being \textbf{O(1)}\\
+ The time complexity of the above algorithms are \textbf{O(n)}
+ 
+ This is not Dynamic programming since the values of curr and prev are continuously changing in both the algorithms.\\
+ 
+ \newpage
+ \section*{Question 4}
+ Let $T'$ be the subtree of tree $T$ having maximum total sum of weight.\\
+ Let the weight of a maximum weighted subtree with root node $v$ denoted by $w(v)$.\\
+ Let $c(u,v)$ be weight of edge between nodes $u$ and $v$.\\
+ Then we can see that for a tree with root node $u$ there are two cases for its maximum weighted subtree $T'$.\\
+ 
+ \textbf{Case 1 -  $u$ occurs in subtree $T'$}\\
+ In this case $w(T') = w(u) = \sum\limits_{v \in children(u)} max(0,w(v)+c(v))$.\\
+ As we can choose to include the children in subtree if it increases our total weight i.e $w(v) + c(u,v) > 0$. Where $w(v)$ is the weight of maximum weighted subtree with root node $v$ which does not include any of the ancestor of $v$.\\ 
+ 
+ \textbf{Case 2 - $u$ does not occur in subtree $T'$}\\
+ In this case we have $|children(u)|$ trees each with one of children of $u$ as its root node.
+ So,  $w(T')$ will be the max of answer got in these problems.\\
+ Hence $w(T')$ will be the maximum of answers obtained in above two cases.\\
+ 
+ Let the graph be $G(V, E)$ where $E$ is given as adjacency list, and $c(e)$ gives weight of edge $e$. 
+ 
+\begin{algorithm}[H]
+ \SetAlgoLined
+ \KwResult{$(T1, T2, W1, W2)$ where $T1$ is the maximum weight subtree including node $u$ $T2$ is our required maximum weight subtree, $W1, W2$ are their weights}
+ \SetKwFunction{FMain}{DFS}
+ \SetKwProg{Fn}{Function}{:}{}
+  \Fn{\FMain{$u$}}{
+     Mark $u$ as 'Explored';\\
+     T1 $\gets$ [], T2 $\gets$ [] \\
+     W1 $\gets$ 0, W2 $\gets$ 0\\
+     \ForEach {edge $(u, v) \in E$}{
+       \If{v is not marked 'Explored'}{
+         t1, t2 , w1, w2 $\gets$ \FMain{v}\\
+         \If{w1 + c(edge) $>$ 0  }{ T1 $\gets$ T1 + t1 + [edge]\\ W1 $\gets$ W1 + w1 + c(edge)}
+         \If{w2 $>$ W2}{W2 $\gets$ w2, T2 $\gets$ t2}
+         }
+    }
+    \If{W1 $>$ W2}{W2 $\gets$ W1, T2 $\gets$ T1}
+    \KwRet{T1, T2, W1, W2}\vspace*{0.45em}
+}
+\textbf{end}\\
+\caption{Subtree with Maximum Total Weight}
+T1, T2, W1, W2 $\gets$ \FMain{V[0]}\\
+\textbf{Output} T2
+\end{algorithm}
+\newpage
+If the subtree is required to be a path then in above Case 1 we can add at most two other paths. We will choose two maximum weight path. So the modified algorithm will be.
+
+\begin{algorithm}[H]
+ \SetAlgoLined
+ \KwResult{$(T1, T2, W1, W2)$ where $T1$ is the maximum weight path including node $u$ $T2$ is our required maximum weight path, $W1, W2$ are their weights}
+ \SetKwFunction{FMain}{DFS}
+ \SetKwProg{Fn}{Function}{:}{}
+  \Fn{\FMain{$u$}}{
+     Mark $u$ as 'Explored';\\
+     T1 $\gets$ [],  T2 $\gets$ [] \\
+     maxt1 $\gets$ [],  maxt2 $\gets$ [] \\
+     W1 $\gets$ 0, W2 $\gets$ 0\\
+     max1 $\gets$ 0, max2 $\gets$ 0\\
+     \ForEach {edge $(u, v) \in E$}{
+       \If{v is not marked 'Explored'}{
+         t1, t2 , w1, w2 $\gets$ \FMain{v}\\
+         \eIf{w1 + c(edge) $>$ max1  }
+         { \ \ maxt1 $\gets$ t1 + [edge]\\ max1 $\gets$ w1 + c(edge)}
+         {\If{w1 + c(edge) $>$ max2  }{\ \ maxt2 $\gets$ t2 + [edge]\\ max2 $\gets$ w1 + c(edge)}}
+         \If{w2 $>$ W2}{\ \ W2 $\gets$ w2\\ T2 $\gets$ t2}
+         }
+    }
+    T2 $\gets$ maxt1 + maxt2\\
+    W2 $\gets$ max1 + max2\\
+    \If{W1 $>$ W2}{W2 $\gets$ W1; \\ T2 $\gets$ T1;}
+    \KwRet{T1, T2, W1, W2}\vspace*{0.45em}
+}
+\textbf{end}\\
+T1, T2, W1, W2 $\gets$ \FMain{V[0]}\\
+\textbf{Output} T2
+\caption{ Maximum Weight Subtree Needed to be a Path}
+\end{algorithm}
+
+Since we are using modified Depth First Search Algorithm and all steps in foreach loop is taking $O(1)$ time, above two algorithms are linear in time.
+ \section*{Question 5}
+ \subsection*{a)}
+ \subsubsection*{Algorithm}
+ \begin{algorithm}[H]
+    \caption{Maximum Weight Increasing Subsequence}
+    \begin{algorithmic}[1]
+    \STATE A[0] $\gets$ - INF, Wt[0] $\gets$ min(Wt[1..n])
+    \FOR{i $\gets$ n downto 0}
+    \STATE Wtmax[i] $\gets$ Wt[i]
+    \FOR{j $\gets$ i+1 to n}
+    \IF{A[j] $>$ A[i] and Wt[i]+Wtmax[j] $>$ Wtmax[i]}
+    \STATE Wtmax[i] $\gets$ Wt[i]+Wtmax[j]
+    \ENDIF
+    \ENDFOR
+    \ENDFOR
+    \STATE Output Wtmax[0] - Wt[0]
+    \end{algorithmic}
+\end{algorithm}
+ \subsubsection*{Correctness}
+ Wtmax[i] is the largest weight subsequence starting with a$_i$.\\
+ Wt[i] is the weight of the ith element i.e w$_i$ and A[i] is the element a$_i$.\\
+ \textbf{Lemma}: For every i $\in$ [n], Wtmax[i] computes the optimal solution for the largest weight increasing subsequence starting with a$_i$.\\
+ \textbf{Proof}: Let Opt(i) be the optimal value for the sub-problem.\\
+ \rule[0mm]{1cm}{0pt} True for i = n.\\
+ \rule[0mm]{1cm}{0pt} Assume True for all n $\geq$ i $\geq$ k,i.e, Wtmax[i] = Opt(i).\\
+ \rule[0mm]{1cm}{0pt} Wtmax[i-1] = Opt(i-1) since Wtmax[i-1] starts with i-1.\\
+ \rule[0mm]{1cm}{0pt} It also computes the max of all those which are greater than i-1. [By strong Induction]\\
+ \rule[0mm]{1cm}{0pt} Hence the algorithm correctly computes Wtmax[i] for all i.\\
+ Memoising the values of Wtmax[i] in the form of array ensures that this is not a exponential problem.\\
+ Wtmax[i] doesnt make calls to Wtmax[j] for j $<$ i, Therefore subproblems are acyclic.\\
+ Now Coming to the actual problem we need the max weight increasing subsequence, So adding a min weight edge with a$_0$ = -$\infty$ doesn't change the problem.\\
+ So finally we return the value of Wtmax[0] - Wt[0] to get an answer for the original problem.\\
+ The maximum weight increasing sub-sequence can be found out by backtracking the decision at each step to find out the indices and henceforth the elements.\\
+ \subsubsection*{Time Complexity}
+ Since for each i the inner loop is called n-i times.\\
+ The time complexity of this algorithm is $\sum_i^n (n-i)$.\\
+ This is a \textbf{O(n$^\mathbf{2}$)} algorithm.\\
+ The space complexity is also \textbf{O(n)} since we memoise only the values of Wtmax[i] in the form of an array
+ \subsection*{b)}
+ \subsubsection*{Algorithm}
+ \begin{algorithm}[H]
+    \caption{Maximum Weight Subsequence such that no three elements are consecutive}
+    \begin{algorithmic}[1]
+    \STATE Wtmax[1] $\gets$ Wt[1], Wtmax[2] $\gets$ Wt[2]+Wt[1] 
+    \STATE St[1] $\gets$ 'a$_1$', St[2] $\gets$ 'a$_1$,a$_2$'
+    \STATE Wtmax[3] $\gets$ max(Wtmax[2], Wt[3]+Wt[1], Wt[3]+Wt[2])
+    \STATE St[3] $\gets$ corresponding(St[2],'a$_1$,a$_3$','a$_2$,a$_3$')
+    \FOR{i $\gets$ 4 upto N}
+    \STATE Wtmax[i] $\gets$ max(Wtmax[i-1], Wtmax[i-2]+Wt[i], Wtmax[i-3]+Wt[i]+Wt[i-1])
+    \STATE St[i] $\gets$ corresponding(St[i-1], St[i-2]+',a$_i$', St[i-3]+'a$_{i-1}$,a$_i$')
+    \ENDFOR
+    \STATE Output Wtmax[n],St[n]
+    \end{algorithmic}
+\end{algorithm}
+ \subsubsection*{Correctness}
+ Wtmax[i] is the sum of weights of largest weight sub-sequence up-to i ,i.e from a$_1$,a$_2$,....a$_i$ such that no three elements are consecutive and St[i] is the largest weight sub-sequence\\
+ Therefore St[1] will be obviously a$_1$.\\
+ St[2] will be a$_1$,a$_2$ since no three elements are consecutive.\\
+ St[3] will be the corresponding sequence to the maximum sum of weights taken 2 at a time.\\
+ Now for any i we have the following three cases.\\
+ \textbf{Case 1:} a$_i$ is not included in the sequence.\\
+ \rule[0.5mm]{1.25cm}{0pt} This is essentially St[i-1] since a$_i$ was excluded and St[i-1] satisfies all the required conditions\\
+ \textbf{Case 2:} a$_{i-1}$ is excluded in the sequence.\\ 
+ \rule[0.5mm]{1.25cm}{0pt} This is essentially St[i-2]+a$_i$\\
+ \rule[0.5mm]{1.25cm}{0pt} Since a$_{i-1}$ is excluded in the sequence, a$_i$ can be freely included in the sequence\\
+ \rule[0.5mm]{1.25cm}{0pt} So Adding a$_i$ to St[i-2] gives the optimal if a$_{i-1}$ is not to be present\\
+ \textbf{Case 3:} a$_{i-2}$ is excluded from the sequence.\\
+ \rule[0.5mm]{1.25cm}{0pt} This is essentially St[i-3]+a$_{i-1}$+a$_i$\\
+ \rule[0.5mm]{1.25cm}{0pt} Since a$_{i-2}$ is excluded in the sequence, a$_i$ and a$_{i-1}$ can be freely included in the sequence\\
+ \rule[0.5mm]{1.25cm}{0pt} So Adding a$_i$ and a$_{i-1}$ to St[i-3] gives the optimal if a$_{i-2}$ is not to be present\\
+ Since the above three cases are exhaustive, we can chose the sub-sequence that gives the maximum weight and accordingly\\
+ Hence the algorithm computes correctly the value of maximum weight subsequence.
+ \subsubsection*{Time Complexity}
+ The sub-problems dependencies are acyclic since a call to i doesn't call Wtmax[j] for j $>$ i.\\
+The \textbf{time} complexity is \textbf{O(n)} since all the max and corresponding functions can be implemented in O(1) time.\\
+ The \textbf{space} complexity will be \textbf{O(n$^\mathbf{2}$)} since we are memoising the strings at each step and number of such strings will be n.
+ \end{document}
